@@ -9,12 +9,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.view.animation.ScaleAnimation;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -28,14 +25,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.purchasestest.R;
-import com.example.purchasestest.adapters.ProductsAdapter;
-import com.example.purchasestest.database.model.Product;
 import com.example.purchasestest.activities.di.DaggerMainActivityComponent;
 import com.example.purchasestest.activities.di.MainActivityComponent;
 import com.example.purchasestest.activities.di.MainActivityModule;
-import com.example.purchasestest.dialogs.ClearListDialog;
 import com.example.purchasestest.activities.mvp.IPresenter;
 import com.example.purchasestest.activities.mvp.IView;
+import com.example.purchasestest.adapters.ProductsAdapter;
+import com.example.purchasestest.database.model.Product;
+import com.example.purchasestest.dialogs.ClearListDialog;
 import com.example.purchasestest.utils.ListMode;
 import com.example.purchasestest.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements IView {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0 && mode == ListMode.PRODUCTS) {
                     if (mFabAdd.isShown()) {
-                       hideFabs();
+                        hideFabs();
                     }
                 } else if (dy < 0 && mode == ListMode.PRODUCTS) {
                     if (!mFabAdd.isShown()) {

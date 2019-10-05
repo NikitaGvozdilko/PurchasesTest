@@ -164,17 +164,21 @@ public class ProductsAdapter extends RecyclerView.Adapter {
     }
 
     class NewProductViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.editProduct)
         EditText editText;
-        View imageSave;
+
+        @BindView(R.id.imageSaveProduct)
+        ImageView imageSave;
+
+        @BindView(R.id.imagePhoto)
         ImageView imagePhoto;
+
+        @BindView(R.id.imageProductPhoto)
         ImageView imageProductPhoto;
 
         NewProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            editText = itemView.findViewById(R.id.editProduct);
-            imageSave = itemView.findViewById(R.id.imageSaveProduct);
-            imagePhoto = itemView.findViewById(R.id.imagePhoto);
-            imageProductPhoto = itemView.findViewById(R.id.imageProductPhoto);
+            ButterKnife.bind(this, itemView);
         }
 
         void bind() {
