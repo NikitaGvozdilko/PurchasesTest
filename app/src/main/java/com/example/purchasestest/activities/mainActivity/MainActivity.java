@@ -1,4 +1,4 @@
-package com.example.purchasestest.activities;
+package com.example.purchasestest.activities.mainActivity;
 
 import android.Manifest;
 import android.animation.ObjectAnimator;
@@ -25,11 +25,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.purchasestest.R;
-import com.example.purchasestest.activities.di.DaggerMainActivityComponent;
-import com.example.purchasestest.activities.di.MainActivityComponent;
-import com.example.purchasestest.activities.di.MainActivityModule;
-import com.example.purchasestest.activities.mvp.IPresenter;
-import com.example.purchasestest.activities.mvp.IView;
+import com.example.purchasestest.activities.mainActivity.di.DaggerMainActivityComponent;
+import com.example.purchasestest.activities.mainActivity.di.MainActivityComponent;
+import com.example.purchasestest.activities.mainActivity.di.MainActivityModule;
+import com.example.purchasestest.activities.mainActivity.mvp.IPresenter;
+import com.example.purchasestest.activities.mainActivity.mvp.IView;
 import com.example.purchasestest.adapters.ProductsAdapter;
 import com.example.purchasestest.database.model.Product;
 import com.example.purchasestest.dialogs.ClearListDialog;
@@ -76,10 +76,18 @@ public class MainActivity extends AppCompatActivity implements IView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         MainActivityComponent component = DaggerMainActivityComponent.builder().mainActivityModule(new MainActivityModule(this, this)).build();
-
         mAdapter = component.getAdapter();
         mPresenter = component.getPresenter();
+        initViews();
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.stopLoading();
+    }
+
+    private void initViews() {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -98,6 +106,7 @@ public class MainActivity extends AppCompatActivity implements IView {
         });
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down);
         mRecyclerView.setLayoutAnimation(animation);
+
         mPresenter.getProducts();
 
         mFabAdd.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements IView {
                 mRecyclerView.smoothScrollToPosition(mAdapter.getItemCount());
             }
         });
-
         mFabClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

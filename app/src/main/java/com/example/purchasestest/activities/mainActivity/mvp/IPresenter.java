@@ -1,4 +1,4 @@
-package com.example.purchasestest.activities.mvp;
+package com.example.purchasestest.activities.mainActivity.mvp;
 
 import com.example.purchasestest.database.model.Product;
 
@@ -13,4 +13,5 @@ public interface IPresenter {
     void updateProduct(Product product);
     void removeSelected(List<Product> productsList);
     void removeAll(List<Product> productsList);
+    void stopLoading();
 }

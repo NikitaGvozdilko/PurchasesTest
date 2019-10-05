@@ -6,7 +6,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.purchasestest.activities.mvp.IView;
+import com.example.purchasestest.activities.mainActivity.mvp.IView;
 
 public class SelectPictureDialog {
     private static final int GALLERY = 0;

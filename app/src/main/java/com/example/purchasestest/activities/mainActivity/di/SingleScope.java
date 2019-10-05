@@ -1,4 +1,4 @@
-package com.example.purchasestest.activities.di;
+package com.example.purchasestest.activities.mainActivity.di;
 
 import java.lang.annotation.Retention;
 

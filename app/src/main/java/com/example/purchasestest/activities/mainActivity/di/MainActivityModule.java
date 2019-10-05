@@ -1,4 +1,4 @@
-package com.example.purchasestest.activities.di;
+package com.example.purchasestest.activities.mainActivity.di;
 
 import android.app.Activity;
 import android.view.View;
@@ -13,8 +13,8 @@ import com.example.purchasestest.adapters.ProductsAdapter;
 import com.example.purchasestest.database.AppDatabase;
 import com.example.purchasestest.database.model.Product;
 import com.example.purchasestest.dialogs.SelectPictureDialog;
-import com.example.purchasestest.activities.mvp.IPresenter;
-import com.example.purchasestest.activities.mvp.IView;
+import com.example.purchasestest.activities.mainActivity.mvp.IPresenter;
+import com.example.purchasestest.activities.mainActivity.mvp.IView;
 import com.example.purchasestest.utils.AppPref;
 
 import dagger.Module;

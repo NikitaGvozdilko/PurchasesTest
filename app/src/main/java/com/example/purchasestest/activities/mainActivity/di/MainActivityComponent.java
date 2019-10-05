@@ -1,7 +1,7 @@
-package com.example.purchasestest.activities.di;
+package com.example.purchasestest.activities.mainActivity.di;
 
 import com.example.purchasestest.adapters.ProductsAdapter;
-import com.example.purchasestest.activities.mvp.IPresenter;
+import com.example.purchasestest.activities.mainActivity.mvp.IPresenter;
 
 import dagger.Component;
 

@@ -1,11 +1,11 @@
-package com.example.purchasestest.activities.di;
+package com.example.purchasestest.activities.mainActivity.di;
 
 import com.example.purchasestest.database.AppDatabase;
-import com.example.purchasestest.activities.mvp.IModel;
-import com.example.purchasestest.activities.mvp.IPresenter;
-import com.example.purchasestest.activities.mvp.IView;
-import com.example.purchasestest.activities.mvp.Model;
-import com.example.purchasestest.activities.mvp.Presenter;
+import com.example.purchasestest.activities.mainActivity.mvp.IModel;
+import com.example.purchasestest.activities.mainActivity.mvp.IPresenter;
+import com.example.purchasestest.activities.mainActivity.mvp.IView;
+import com.example.purchasestest.activities.mainActivity.mvp.Model;
+import com.example.purchasestest.activities.mainActivity.mvp.Presenter;
 
 import dagger.Module;
 import dagger.Provides;

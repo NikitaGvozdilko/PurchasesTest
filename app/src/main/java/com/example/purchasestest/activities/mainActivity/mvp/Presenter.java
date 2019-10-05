@@ -1,4 +1,4 @@
-package com.example.purchasestest.activities.mvp;
+package com.example.purchasestest.activities.mainActivity.mvp;
 
 import com.example.purchasestest.database.model.Product;
 
@@ -8,6 +8,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -15,6 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 public class Presenter implements IPresenter {
     private IView view;
     private IModel model;
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     public Presenter(IModel model) {
         this.model = model;
@@ -37,26 +39,26 @@ public class Presenter implements IPresenter {
 
     @Override
     public void getProducts() {
-        model.getProducts().subscribe(
+        compositeDisposable.add(model.getProducts().subscribe(
                 new Consumer<List<Product>>() {
                     @Override
                     public void accept(List<Product> products) {
                         view.updateList(products);
                     }
                 }
-        );
+        ));
     }
 
     @Override
     public void getHistory() {
-       model.getHistory().subscribe(
+       compositeDisposable.add(model.getHistory().subscribe(
                 new Consumer<List<Product>>() {
                     @Override
                     public void accept(List<Product> products) {
                         view.updateList(products);
                     }
                 }
-        );
+        ));
     }
 
     @Override
@@ -119,6 +121,11 @@ public class Presenter implements IPresenter {
                         view.showError(e.getMessage());
                     }
                 });
+    }
+
+    @Override
+    public void stopLoading() {
+        compositeDisposable.dispose();
     }
 
 }
