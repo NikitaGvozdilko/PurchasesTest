@@ -1,13 +1,12 @@
 package com.example.purchasestest.dialogs;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.example.purchasestest.mvp.IView;
+import com.example.purchasestest.activities.mvp.IView;
 
 public class SelectPictureDialog {
     private static final int GALLERY = 0;

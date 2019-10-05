@@ -1,7 +1,6 @@
-package com.example.purchasestest.mvp;
+package com.example.purchasestest.activities.mvp;
 
 import com.example.purchasestest.database.model.Product;
-import com.example.purchasestest.utils.ProductsFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +8,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;

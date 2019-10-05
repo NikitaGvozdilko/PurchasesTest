@@ -1,10 +1,8 @@
-package com.example.purchasestest.mvp;
+package com.example.purchasestest.activities.mvp;
 
 import com.example.purchasestest.database.model.Product;
 
 import java.util.List;
-
-import io.reactivex.Flowable;
 
 public interface IPresenter {
     void attachView(IView view);

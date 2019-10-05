@@ -1,4 +1,4 @@
-package com.example.purchasestest.mvp;
+package com.example.purchasestest.activities.mvp;
 
 import com.example.purchasestest.database.model.Product;
 

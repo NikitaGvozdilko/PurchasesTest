@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.RequestManager;
 import com.example.purchasestest.R;
 import com.example.purchasestest.database.model.Product;
 import com.example.purchasestest.utils.AppPref;
@@ -28,6 +29,7 @@ import butterknife.ButterKnife;
 
 public class ProductsAdapter extends RecyclerView.Adapter {
     private final AppPref appPref;
+    private final RequestManager glide;
     private List<Product> productsList = new ArrayList<>();
     private MutableLiveData<Product> newProduct;
     private MutableLiveData<Product> updateProduct;
@@ -36,10 +38,11 @@ public class ProductsAdapter extends RecyclerView.Adapter {
     private String newProductImagePath;
     private ListMode listMode = ListMode.PRODUCTS;
 
-    public ProductsAdapter(MutableLiveData<Product> newProduct, MutableLiveData<Product> updateProduct, AppPref appPref, View.OnClickListener onClickListener) {
+    public ProductsAdapter(MutableLiveData<Product> newProduct, MutableLiveData<Product> updateProduct, AppPref appPref, RequestManager glide, View.OnClickListener onClickListener) {
         this.newProduct = newProduct;
         this.updateProduct = updateProduct;
         this.appPref = appPref;
+        this.glide = glide;
         this.onClickListener = onClickListener;
     }
 
@@ -121,32 +124,42 @@ public class ProductsAdapter extends RecyclerView.Adapter {
         }
 
         void bind(Product product) {
-            if (listMode == ListMode.HISTORY) {
+            if (listMode == ListMode.HISTORY)
                 checkBox.setVisibility(View.GONE);
-            } else {
-                View.OnClickListener onClickListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        product.setPurchased(!product.isPurchased());
-                        updateProduct.postValue(product);
-                        checkBox.setChecked(product.isPurchased());
-                    }
-                };
-                checkBox.setVisibility(View.VISIBLE);
-                checkBox.setChecked(product.isPurchased());
-                checkBox.setOnClickListener(onClickListener);
-                itemView.setOnClickListener(onClickListener);
-                if (!TextUtils.isEmpty(product.getImagePath())) {
-                    imageProductPhoto.setImageURI(Uri.parse(product.getImagePath()));
-                    textTitle.setVisibility(View.GONE);
-                    imageProductPhoto.setVisibility(View.VISIBLE);
-                } else {
-                    textTitle.setVisibility(View.VISIBLE);
-                    imageProductPhoto.setVisibility(View.GONE);
-                }
-            }
+            else
+                initProductsList(product);
 
-            textTitle.setText(product.getText());
+            if (!TextUtils.isEmpty(product.getImagePath()))
+                displayImage(product.getImagePath());
+            else
+                displayText(product.getText());
+        }
+
+        private void initProductsList(Product product) {
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    product.setPurchased(!product.isPurchased());
+                    updateProduct.postValue(product);
+                    checkBox.setChecked(product.isPurchased());
+                }
+            };
+            checkBox.setVisibility(View.VISIBLE);
+            checkBox.setChecked(product.isPurchased());
+            checkBox.setOnClickListener(onClickListener);
+            itemView.setOnClickListener(onClickListener);
+        }
+
+        private void displayImage(String path) {
+            glide.load(path).into(imageProductPhoto);
+            textTitle.setVisibility(View.GONE);
+            imageProductPhoto.setVisibility(View.VISIBLE);
+        }
+
+        private void displayText(String text) {
+            textTitle.setVisibility(View.VISIBLE);
+            imageProductPhoto.setVisibility(View.GONE);
+            textTitle.setText(text);
         }
     }
 
@@ -169,15 +182,11 @@ public class ProductsAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     if (!editText.getText().toString().isEmpty() || !TextUtils.isEmpty(newProductImagePath)) {
-                        Product product = new Product();
-                        product.setId(appPref.getId());
-                        product.setImagePath(newProductImagePath);
-                        product.setText(editText.getText().toString());
-                        Date currentTime = new Date();
-                        product.setTime(currentTime.getTime());
+                        Product product = createProduct();
                         productsList.add(product);
                         notifyDataSetChanged();
                         newProduct.postValue(product);
+
                         editText.getText().clear();
                         newProductImagePath = "";
                     }
@@ -185,15 +194,29 @@ public class ProductsAdapter extends RecyclerView.Adapter {
             });
 
             if (!TextUtils.isEmpty(newProductImagePath)) {
-                imageProductPhoto.setImageURI(Uri.parse(newProductImagePath));
-                editText.setVisibility(View.GONE);
-                imageProductPhoto.setVisibility(View.VISIBLE);
+                displayImage(newProductImagePath);
             } else {
                 editText.setVisibility(View.VISIBLE);
                 imageProductPhoto.setVisibility(View.GONE);
             }
 
             imagePhoto.setOnClickListener(onClickListener);
+        }
+
+        private void displayImage(String path) {
+            glide.load(path).into(imageProductPhoto);
+            editText.setVisibility(View.GONE);
+            imageProductPhoto.setVisibility(View.VISIBLE);
+        }
+
+        private Product createProduct() {
+            Product product = new Product();
+            product.setId(appPref.getId());
+            product.setImagePath(newProductImagePath);
+            product.setText(editText.getText().toString());
+            Date currentTime = new Date();
+            product.setTime(currentTime.getTime());
+            return product;
         }
     }
 }

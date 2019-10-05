@@ -1,12 +1,16 @@
 package com.example.purchasestest.dialogs;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 
 import com.example.purchasestest.database.model.Product;
-import com.example.purchasestest.mvp.IPresenter;
+import com.example.purchasestest.activities.mvp.IPresenter;
 
 import java.util.List;
 
